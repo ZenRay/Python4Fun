@@ -19,8 +19,8 @@ parser.add_argument(
     "-f", "--file", action="append", 
     help="img file or list of img files. eg:-f file1 -f file2"
 )
-parser.add_argument("--width", type=int, default=80)
-parser.add_argument("--height", type=int, default=80)
+parser.add_argument("--width", type=int, default=100)
+parser.add_argument("--height", type=int, default=100)
 
 ## ⏰if required True, must specify the argument
 parser.add_argument("-o", "--output", required=False)
@@ -28,7 +28,7 @@ parser.add_argument("-o", "--output", required=False)
 
 # TODO: Store the argument
 args = parser.parse_args()
-CHAR = string.printable.replace(" ", "")
+CHAR = string.printable[:-6]
 IMAGE = args.file
 OUTPUT = args.output
 WIDTH = args.width
@@ -63,18 +63,21 @@ def __scale_pixel(file, width=WIDTH, height=HEIGHT, resize=False, crop=False):
     return (width, height), img
 
 # TODO: Transform the img to text
-def __transform(file, verbose=True, output=None, save=False, **argv):
+def __transform(file, verbose=True, output=None, save=False, report=False, **argv):
     _, img = __scale_pixel(file, **argv)
     # img.show()
     result = ""
     for y in range(img.size[1]):
-        for x in range(img.size[1]):
+        for x in range(img.size[0]):
             index = int(img.getpixel((x,y)) / 257.0 * len(CHAR))
             result += CHAR[index]
         result += "\n"
     
     if verbose:
         print(result)
+    
+    if report:
+        img.show()
     
     if save:
         try:
