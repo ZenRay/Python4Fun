@@ -28,7 +28,7 @@ parser.add_argument("-o", "--output", required=False)
 
 # TODO: Store the argument
 args = parser.parse_args()
-CHAR = string.printable[:-6]
+CHAR = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{}[]?-_+~<>i!lI;:,\"^`'. "
 IMAGE = args.file
 OUTPUT = args.output
 WIDTH = args.width
