@@ -96,4 +96,4 @@ def __transform(file, verbose=True, output=None, save=False, report=False, **arg
             file.write(result)
 
 if __name__ == "__main__":
-    __transform(IMAGE[0], resize=True)
+    __transform(IMAGE[0], resize=True, report=True)
