@@ -43,3 +43,7 @@ There are some packages required:
 * scrapy
 * time
 * pandas
+
+## 3. [movieCrawl](./movieCrawl)
+
+Crawl the DouBan Top250 movie, you can run the script, like `python douban.py`.
