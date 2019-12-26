@@ -50,7 +50,7 @@ Crawl the DouBan Top250 movie, you can run the script, like `python douban.py`.
 
 ## 4. [loggerConfig](./loggerConfig)
 
-Use configuration file to setup logger. There are some default FORMATTERS and HANDLERS configuration file that parse the `conf` file with [HOCON](https://github.com/lightbend/config/blob/master/HOCON.md) .
+Use configuration file to setup logger. There are some default FORMATTERS and HANDLERS configuration `conf` file that can be parsed with [HOCON](https://github.com/lightbend/config/blob/master/HOCON.md) .
 
 ### 4.1 Requirements
 
