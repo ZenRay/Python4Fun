@@ -47,3 +47,39 @@ There are some packages required:
 ## 3. [movieCrawl](./movieCrawl)
 
 Crawl the DouBan Top250 movie, you can run the script, like `python douban.py`.
+
+## 4. [loggerConfig](./loggerConfig)
+
+Use configuration file to setup logger. There are some default FORMATTERS and HANDLERS configuration file that parse the `conf` file with [HOCON](https://github.com/lightbend/config/blob/master/HOCON.md) .
+
+### 4.1 Requirements
+
+There are some packages required:
+
+* pyhocon
+
+### 4.2 Usage Case
+
+There is a [example](./loggerConfig/__init__.py): 
+
+```python
+import logging
+import logging.config
+
+conf = create_logger_conf(log_path="log.log")
+logger_conf = {
+    "loggerss": {
+        "sample": {
+            "handlers": ["console", "file"],
+            "level": "INFO"
+        }
+    }
+}
+conf.update(logger_conf)
+logging.config.dictConfig(conf)
+
+# now can set logger `sample`
+sample = logging.getLogger("sample")
+sample.info("This is test message")
+```
+
