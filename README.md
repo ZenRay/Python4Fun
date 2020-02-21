@@ -83,3 +83,57 @@ sample = logging.getLogger("sample")
 sample.info("This is test message")
 ```
 
+## 4. [PytorchVisualization][./PytorchVisualization]
+
+It’s a customize script([visualize](./PytorchVisualization/visualize.py)) to display **pytorch** training progress, which is used the package `visdom`.
+
+**Caution:** it does plot line.
+
+**TODO:**
+
+- [x] Line plot
+  - [x] Single Line plot
+  - [x] Multi-line plot
+- [ ] Text plot
+- [ ] Image 
+- [ ] Video
+
+### 4.1 Tutorial
+
+Right now, it can plot one single line, multi-line on one figure, multi-line on different figure. When plot train and validate result, the train value is forehead.
+
+```python
+# import package
+from utils import visualize
+import numpy as np
+
+# Initialization 
+vis = visualize.Visualizer2(report_format="{time}:{epoch}")
+
+# plot train and validate result
+for _ in range(4):
+    data = {
+        "accuracy": [np.random.randint(-20, 3000), np.random.randint(-20, 3000)],
+        "f1": [np.random.randint(-200, 150), np.random.randint(-200, 230)]
+    }
+    vis.multi_plot(data)
+
+# plot single result with plot method
+for _ in range(4):
+  data = np.random.randint(-5, 10)
+  vis.plot(data, "accuracy")
+
+# plot single result with multi_plot method
+for _ in range(4):
+    data = {"accuracy": np.random.randint(-5, 10)}
+    vis.multi_plot(data)
+
+# plot more result with multi_plot method, like accuracy and f1
+for _ in range(4):
+    data = {
+        "accuracy": np.random.randint(-5, 5),
+        "f1": np.random.randint(-5, 4)
+    }
+    vis.multi_plot(data)
+```
+
