@@ -137,3 +137,51 @@ for _ in range(4):
     vis.multi_plot(data)
 ```
 
+### 5. [multiThreadExample](./multiThreadExample)
+
+Multi-threading example, there are two thread: one is used to extract data item `ExtractorThread`, the other is predict sentiment item `PredictThread`. The thread class example:
+
+```python
+class NamedThread(threading.Thread):
+    def __init__(self, filename, mode, **kwargs):
+      	"""Initalize Property"""
+        self.filename = filename
+        self.mode = mode
+        super().__init__(**kwargs)
+
+    def deal_method(self):
+      	"""Deal With Data Item Method"""
+        global ITEM_QUEUE, RETRY_TIME
+        retry = 0 # retry times
+        logger.info(f"Start predict thread")
+        while retry <= RETRY_TIME:
+            try:
+                item = ITEM_QUEUE.get(timeout=3)
+                
+                text = item["clean_text"]
+                tokens = model.prepross(text)
+                item["predict"]  = model.predict(tokens) if len(tokens) else (1, 0, 0, 0)
+
+                # write data
+                fhandler = FileWriter(self.filename, mode=self.mode)
+                with fhandler as writer:
+                    writer.write(json.dumps(item, ensure_ascii=False) + "\n")
+
+                logger.debug(f"Predict item id is {item['id']}")
+                
+                # if get item right, re_initial retry
+                retry = 0
+            except queue.Empty:
+                logger.debug(f"Queue is empty, wait 1 seconds.")
+                retry -= 1
+                time.sleep(1)
+        
+        # exhausted RETRY_TIME
+        logger.info(f"Data item is exhausted")
+
+
+    def run(self):
+      	"""Overide Method From Thread"""
+        self.predict()
+```
+
