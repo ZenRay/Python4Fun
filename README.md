@@ -203,4 +203,4 @@ FEE = "#FEE"
 PHONE = "#PHONE"
 ```
 
-Caution: ⚠️ the regex is not perfect, there is so many things need being done!
+Caution ⚠️: the regex is not perfect, there are so many things need being done!
