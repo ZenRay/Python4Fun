@@ -135,7 +135,7 @@ class PredictThread(threading.Thread):
                 retry = 0
             except queue.Empty:
                 logger.debug(f"Queue is empty, wait 1 seconds.")
-                retry -= 1
+                retry += 1
                 time.sleep(1)
         
         # exhausted RETRY_TIME
