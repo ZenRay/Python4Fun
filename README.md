@@ -185,3 +185,22 @@ class NamedThread(threading.Thread):
         self.predict()
 ```
 
+## 5. [RegexNLP](./RegexNLP)
+
+Compress word information about Weibo. Use regular expression to sub unified token, like:
+
+```python
+BOS = "<BOS/>"
+EOS = "</EOS>"
+UNK = "<UNK>"
+DATE = "#DATE"
+TIME = "#TIME"
+NUMBER = "#NUM"
+LINK = "#URL"
+IMAG = "#IMG"
+USER = "#USER"
+FEE = "#FEE"
+PHONE = "#PHONE"
+```
+
+Caution: ⚠️ the regex is not perfect, there is so many things need being done!
