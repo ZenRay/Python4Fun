@@ -204,3 +204,29 @@ PHONE = "#PHONE"
 ```
 
 Caution ⚠️: the regex is not perfect, there are so many things need being done!
+
+
+
+## 6. [InterchangeUnicodeString](./CharEncode&Decode)
+
+There are two functions to deal with string:
+
+```python
+# string to unicode
+>>> string = "这个是一个测试字符串"
+>>> text2unicode(string) # 默认情况是直接得到 16 进制字符串
+    '\u8FD9\u4E2A\u662F\u4E00\u4E2A\u6D4B\u8BD5\u5B57\u7B26\u4E32'
+>>> print("\u8FD9\u4E2A\u662F\u4E00\u4E2A\u6D4B\u8BD5\u5B57\u7B26\u4E32")
+    这个是一个测试字符串
+>>> print(text2unicode(string), True) # 转换为字节型字符
+    b'\\u8fd9\\u4e2a\\u662f\\u4e00\\u4e2a\\u6d4b\\u8bd5\\u5b57\\u7b26\\u4e32'
+   
+# unicode to string
+>>> string = b'\\u8fd9\\u4e2a\\u662f\\u4e00\\u4e2a\\u6d4b\\u8bd5\\u5b57\\u7b26\\u4e32'
+>>> unicode2text(string) # 字节型数据转换
+    '这个是一个测试字符串'
+>>> string = '\\u8fd9\\u4e2a\\u662f\\u4e00\\u4e2a\\u6d4b\\u8bd5\\u5b57\\u7b26\\u4e32'
+>>> unicode2text(string) # 字符串型数据转换
+    '这个是一个测试字符串'
+```
+
