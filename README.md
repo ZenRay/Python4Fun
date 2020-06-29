@@ -203,7 +203,7 @@ FEE = "#FEE"
 PHONE = "#PHONE"
 ```
 
-Caution ⚠️: the regex is not perfect, there are so many things need being done!
+Caution ⚠️: the regex is not perfect, there are so many things could being done!
 
 
 
@@ -230,3 +230,10 @@ There are two functions to deal with string:
     '这个是一个测试字符串'
 ```
 
+## 7. [Naive RNN](./DeepLearning/naiveRNN.py)
+
+使用 Numpy 实现简单的 RNN cell，包含了三个属性: `weight_io` 是输入到输出权重 $W$，`weight_ho` 是上一个输出  $U$。当个 RNN cell 结构是 
+$$
+\text{result}_i=\text{tanh}(\text{dot}(W, \text{input}_i) + \text{dot}(U, \text{hidden}_{i-1}) + \text{bias})
+$$
+得到的最终结果是把输出整合为一个序列，但实际情况下输出结果长度可以为 1，即只保留序列最后一个输入的结果。
