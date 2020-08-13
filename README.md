@@ -237,3 +237,44 @@ $$
 \text{result}_i=\text{tanh}(\text{dot}(W, \text{input}_i) + \text{dot}(U, \text{hidden}_{i-1}) + \text{bias})
 $$
 得到的最终结果是把输出整合为一个序列，但实际情况下输出结果长度可以为 1，即只保留序列最后一个输入的结果。
+
+## 8. [ConfigParse](./ConfigParse)
+
+Python 的配置解析，可以分为两种情况：1. 解决 CMD 的方式交互的配置解析，这种主要是在命令行的情况下使用；2. 解决从文件中解析的情况，这种情况主要的目的是从一个配置文件中去解析。
+
+第一种情况下可以使用标准库中的 argparse 解决，第二种的话可以根据情况判断是否需要使用第三方库，第三方库包括 pyhocon（是由谷歌开发完成，集成了多个类型的配置方式，yaml、init、json 等多种类型）。如果不使用第三方库，可以使用标准库中的 configparser 解决。
+
+### configparser 解析
+
+configparser 解析的文件是与 Microsoft Windows INI 文件的类似的语言:
+```ini
+[DEFAULT]
+ServerAliveInterval = 45
+Compression = yes
+CompressionLevel = 9
+ForwardX11 = yes
+
+[bitbucket.org]
+User = hg
+
+[topsecret.server.com]
+Port = 50022
+ForwardX11 = no
+```
+
+`configparser` 可以直接解析文件，通过一个 `parser` 对象可以直接使用 `read` 等几种方法读取文件或者数据可以达到解析数据的情况。在文件 `parse.py` 是通过 `read` 方法读取文件，脚本的数据方式是:
+
+```python
+>>> from parse import Config
+>>> config = Config("./database.ini")
+
+# 获取 mysql 的配置信息
+>>> config.mysql
+{'host': '192.168.1.31',
+ 'port': '3306',
+ 'user': 'root',
+ 'charset': 'utf8mb4',
+ 'connect_timeout': '35',
+ 'database': 'test'}
+```
+
