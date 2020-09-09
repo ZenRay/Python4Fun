@@ -278,3 +278,10 @@ ForwardX11 = no
  'database': 'test'}
 ```
 
+## 9. [MachineLearning](./MachineLearning)
+
+机器学习部分的有趣代码整理和总结
+
+### 9.1 OLS
+
+简单线性回归参数变化，方差和残差变化可视化。详情参考 [README](./MachineLearning/README.md)
