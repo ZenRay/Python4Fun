@@ -44,6 +44,7 @@ source = ColumnDataSource(data=dict(x=x, y=y, pred=pred, error_0s=error_0s, \
 plot = figure(plot_height=800, plot_width=800, title="不同参数变化残差变化", \
     x_range=[min(min(x)*.1, min(x) * 1.5), max(max(x) * .2, max(x)*1.5)], \
         y_range=[min(min(y)*.1, min(y) * 1.5), max(max(y) * .2, max(y)*1.5)])
+plot.grid.visible = False
 
 # 方差变化信息
 var_plot = figure(plot_width=600, title="方差变化")
