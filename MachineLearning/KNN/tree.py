@@ -3,6 +3,8 @@
 构造 KD tree
 """
 import numpy as np
+from queue import PriorityQueue, LifoQueue
+
 
 class Node:
     """
@@ -31,7 +33,7 @@ class Node:
             raise TypeError(f"Point value is {type(self.point)}, need array, "
                             "int, str")
         # 存在左右子节点输出
-        if self.right is not None:
+        if self.left is not None:
             left = " Left child: Node;"
         else:
             left = ""
@@ -45,6 +47,15 @@ class Node:
         
         return fmt
 
+
+    def has_left(self):
+        """判断是否有左子节点"""
+        return isinstance(self.left, Node)
+
+    
+    def has_right(self):
+        """判断是有右子节点"""
+        return isinstance(self.right, Node)
 
 class KDTree:
     def __init__(self, values=None):
@@ -83,43 +94,89 @@ class KDTree:
 
 
 
-    def search(self, X):
+    def search(self, X, k=1):
         """搜索KD树
 
-        查找数据点 X 的最近邻
+        查找数据点 X 的 K 近邻节点
         """
         # TODO: 查找“最近”叶节点
         if not isinstance(X, np.ndarray):
             X = np.array(X)
         
         node = self.root
-        # if X[0] <= node.point[0]:
-        #     node = node.left
-        # else:
-        #     node = node.right
         
+        stack = LifoQueue()
+        stack.put_nowait(node)
         # 树深度
         depth = 1
         while True:
-            print(repr(node))
             # 左节点为空，存在右节点相反情况时直接将节点修改为对应子节点，左右节点都存在时再比较
             if node.left is None and node.right:
                 node = node.right
             elif node.right is None and node.left:
-                print("存在错误")
                 node = node.left
             else:
-                dim = depth % X.shape[0]
+                dim = depth // X.shape[0]
                 if X[dim] <= node.point[dim]:
                     node = node.left
                 else:
                     node = node.right
-            
-            
+            stack.put_nowait(node)
             # 终止条件为达到叶节点
             if node.left is None and node.right is None:
                 break
             
             depth += 1
         
-        return node
+        # TODO: 回退搜搜
+        result = PriorityQueue(maxsize=k)
+        # 检查叶节点，将叶节点作为最近邻 node
+        node = stack.get_nowait()
+        distance = np.linalg.norm(node.point - X)
+        queried = [node]
+
+        # 优先队列是按照从小达到排序，保证最终结果保留最小值，所以将距离取逆作为 priority
+        result.put_nowait((-1 * distance, node))
+        
+        while not stack.empty():
+            node = stack.get_nowait()
+            # 检查父节点下另一子节点是否为最近节点，将节点给到 stack 进行循环以实现对子节点
+            # 的搜索
+            if node.has_left() and node.left not in queried:
+                stack.put_nowait(node)
+                node = node.left
+                
+            elif node.has_right() and node.right not in queried:
+                stack.put_nowait(node)
+                node = node.right
+                
+
+            if node in queried:
+                continue
+            # 添加到已访问列表
+            queried.append(node)
+            distance = np.linalg.norm(node.point - X)
+            
+            # 如果结果队列没有满，那么直接将节点添加到队列中
+            if not result.full():
+                result.put_nowait((-1 * distance, node))
+                continue
+            
+            # 如果队列满了，那么取队列中到 priority 作为判断队列是否更新到门槛
+            current_distance, current_node = result.get_nowait()
+
+            if -1 * current_distance >= distance:
+                result.put_nowait((-1 * distance, node))
+            else:
+                result.put_nowait((current_distance, current_node))
+
+        return result
+
+
+
+if __name__ == "__main__":
+    values = np.array([[7,2], [5, 4], [9, 6], [2,3], [4,7], [8,1]])
+
+    node = KDTree(values)
+    t = node.search([8,1], 1)
+    print(t.get_nowait()[1])
