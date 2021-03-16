@@ -1,6 +1,3 @@
-[submodule "SudokuSolver"]
-	path = SudokuSolver
-	url = https://github.com/ZenRay/SodukuSolver.git
 [submodule "SUBMODULE/SodukuSolver"]
 	path = SUBMODULE/SodukuSolver
 	url = git@github.com:ZenRay/SodukuSolver.git
