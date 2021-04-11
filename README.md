@@ -83,7 +83,7 @@ sample = logging.getLogger("sample")
 sample.info("This is test message")
 ```
 
-## 4. [PytorchVisualization][./PytorchVisualization]
+## 4. [PytorchVisualization](./PytorchVisualization)
 
 It’s a customize script([visualize](./PytorchVisualization/visualize.py)) to display **pytorch** training progress, which is used the package `visdom`.
 
@@ -246,7 +246,7 @@ Python 的配置解析，可以分为两种情况：1. 解决 CMD 的方式交�
 
 ### configparser 解析
 
-configparser 解析的文件是与 Microsoft Windows INI 文件的类似的语言:
+configparser 解析的文件是与 Microsoft Windows INI 文件的类似:
 ```ini
 [DEFAULT]
 ServerAliveInterval = 45
@@ -285,3 +285,8 @@ ForwardX11 = no
 ### 9.1 OLS
 
 简单线性回归参数变化，方差和残差变化可视化。详情参考 [README](./MachineLearning/README.md)
+
+## 10. [AutoEncoder 图像应用](./AutoEncoder)
+
+通过 Keras 搭建 encoder 和 decoder 模型的方式，将 encoder 的结果作为特征表现的方式
+
