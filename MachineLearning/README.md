@@ -14,3 +14,6 @@ KNN 算法实现，包括了 `brutal` 方式——直接暴力计算，和 `KD` 
 
 # 3. [NaiveBayes](./NaiveBayes)
 朴素贝叶斯算法
+
+# 4. [Logist](./Logist)
+逻辑回归算法实现
